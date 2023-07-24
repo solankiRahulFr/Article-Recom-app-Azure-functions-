@@ -2,24 +2,23 @@ from flask import Flask, jsonify
 import numpy as np
 import _pickle as cPickle
 import os
+import lightfm
 # Always use relative import for custom module
 from .package.module import MODULE_VALUE
 
 app = Flask(__name__)
-
+rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 def loadModules():
-    print(os.path.dirname(os.path.realpath(__file__)), "-------------------------------------")
-    global model, interactions, item_features_matrix, item_dict
-    model = cPickle.load(open('./app_modules/lightfm_model_hybrid.pkl','rb'))
-    interactions = cPickle.load(open('./app_modules/interactions.pkl','rb'))
-    item_features_matrix = cPickle.load(open('./app_modules/item_features_matrix.pkl','rb'))
-    item_dict = cPickle.load(open('./app_modules/item_features_matrix.pkl','rb'))
+    load_model = cPickle.load(open(rootPath + '\\FlaskApp\\app_modules\\lightfm_model_hybrid.pkl','rb'))
+    load_interactions = cPickle.load(open(rootPath + '\\FlaskApp\\app_modules\\interactions.pkl','rb'))
+    load_item_features_matrix = cPickle.load(open(rootPath + '\\FlaskApp\\app_modules\\item_features_matrix.pkl','rb'))
+    load_item_dict = cPickle.load(open(rootPath + '\\FlaskApp\\app_modules\\item_dict.pkl','rb'))
+    return load_model, load_interactions, load_item_features_matrix, load_item_dict
 
 
 
 def n_recommendation(model, interactions, user_id, item_dict , item_features_matrix, n_recommendations=5):
     n_users, n_items = interactions.shape
-
     # Get user and item mapping indices
     user_mapping = interactions.row
     item_mapping = interactions.col
@@ -43,10 +42,12 @@ def n_recommendation(model, interactions, user_id, item_dict , item_features_mat
 
 @app.route("/predictArticles/<id>", methods=['GET'])
 def predictArticles(id: int):
-    loadModules()
-    recom_articles, recom_categories=n_recommendation(model, interactions, id, item_dict, item_features_matrix)
-    return jsonify(articles=recom_articles,
-                   categories=recom_categories)
+    userid = int(id)
+    model, interactions, item_features_matrix, item_dict = loadModules()
+    recom_articles, recom_categories=n_recommendation(model, interactions, userid, item_dict, item_features_matrix, 5)
+    return jsonify(userid = userid,
+                   articles=','.join(str(v) for v in recom_articles),
+                   categories=','.join(str(v) for v in set(recom_categories)))
 
 @app.route("/module")
 def module():
