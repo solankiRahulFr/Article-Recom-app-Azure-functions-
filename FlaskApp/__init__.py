@@ -1,17 +1,19 @@
 from flask import Flask, jsonify
 import numpy as np
 import _pickle as cPickle
+import os
 # Always use relative import for custom module
 from .package.module import MODULE_VALUE
 
 app = Flask(__name__)
 
 def loadModules():
+    print(os.path.dirname(os.path.realpath(__file__)), "-------------------------------------")
     global model, interactions, item_features_matrix, item_dict
-    model = cPickle.load(open('lightfm_model_hybrid.pkl','rb'))
-    interactions = cPickle.load(open('interactions.pkl','rb'))
-    item_features_matrix = cPickle.load(open('item_features_matrix.pkl','rb'))
-    item_dict = cPickle.load(open('item_features_matrix.pkl','rb'))
+    model = cPickle.load(open('./app_modules/lightfm_model_hybrid.pkl','rb'))
+    interactions = cPickle.load(open('./app_modules/interactions.pkl','rb'))
+    item_features_matrix = cPickle.load(open('./app_modules/item_features_matrix.pkl','rb'))
+    item_dict = cPickle.load(open('./app_modules/item_features_matrix.pkl','rb'))
 
 
 
