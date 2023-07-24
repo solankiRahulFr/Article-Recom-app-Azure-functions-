@@ -6,3 +6,4 @@ azure-functions
 Flask
 _pickle
 numpy
+lightfm
