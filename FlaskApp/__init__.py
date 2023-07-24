@@ -41,8 +41,8 @@ def n_recommendation(model, interactions, user_id, item_dict , item_features_mat
     return articles, categories
 
 
-@app.route("/predictArticles/UserId/<id>", methods=['GET'])
-def hello(id: int):
+@app.route("/predictArticles/<id>", methods=['GET'])
+def predictArticles(id: int):
     loadModules()
     recom_articles, recom_categories=n_recommendation(model, interactions, id, item_dict, item_features_matrix)
     return jsonify(articles=recom_articles,
