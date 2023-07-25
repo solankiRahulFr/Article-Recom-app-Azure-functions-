@@ -21,6 +21,6 @@ setuptools
 threadpoolctl==3.2.0; python_version >= '3.8'
 urllib3==2.0.4; python_version >= '3.7'
 werkzeug==2.3.6; python_version >= '3.8'
-lightfm==1.17
+git+https://github.com/lyst/lightfm.git
 
 
