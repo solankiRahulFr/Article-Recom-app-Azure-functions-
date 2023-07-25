@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 import numpy as np
-import _pickle as cPickle
+import pickle
 import os
 import lightfm
 # Always use relative import for custom module
@@ -9,10 +9,10 @@ from .package.module import MODULE_VALUE
 app = Flask(__name__)
 rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 def loadModules():
-    load_model = cPickle.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
-    load_interactions = cPickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
-    load_item_features_matrix = cPickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
-    load_item_dict = cPickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
+    load_model = pickle.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
+    load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
+    load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
+    load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
     return load_model, load_interactions, load_item_features_matrix, load_item_dict
 
 
