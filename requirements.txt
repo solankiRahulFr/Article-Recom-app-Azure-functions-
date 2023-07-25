@@ -3,6 +3,7 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
+docx
 wheel
 blinker==1.6.2; python_version >= '3.7'
 certifi==2023.7.22; python_version >= '3.6'
