@@ -1,6 +1,7 @@
 from flask import Flask, jsonify
 import numpy as np
-import pickle
+import joblib
+import joblib
 import os
 import lightfm
 # Always use relative import for custom module
@@ -11,10 +12,10 @@ rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 def loadModule():
     global load_model, load_interactions, load_item_features_matrix, load_item_dict
-    load_model = pickle.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
-    load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
-    load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
-    load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
+    load_model = joblib.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
+    load_interactions = joblib.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
+    load_item_features_matrix = joblib.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
+    load_item_dict = joblib.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
 
 
 
@@ -42,7 +43,7 @@ def n_recommendation(model, interactions, user_id, item_dict , item_features_mat
 
 @app.route("/")
 def index():
-    return "main route working -- "+rootPath
+    return "main route working -- "+ os.listdir(rootPath)
 
 @app.route("/predictArticles/<id>", methods=['GET'])
 def predictArticles(id: int):
