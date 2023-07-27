@@ -11,10 +11,10 @@ rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 def loadModule():
     global load_model, load_interactions, load_item_features_matrix, load_item_dict
-    load_model = pickle.load(os.path.join(rootPath, '/FlaskApp/app_modules/lightfm_model_hybrid.pkl'))
-    load_interactions = pickle.load(os.path.join(rootPath, '/FlaskApp/app_modules/interactions.pkl'))
-    load_item_features_matrix = pickle.load(os.path.join(rootPath, '/FlaskApp/app_modules/item_features_matrix.pkl'))
-    load_item_dict = pickle.load(os.path.join(rootPath, '/FlaskApp/app_modules/item_dict.pkl'))
+    load_model = pickle.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
+    load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
+    load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
+    load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
 
 
 
@@ -42,8 +42,8 @@ def n_recommendation(model, interactions, user_id, item_dict , item_features_mat
 
 @app.route("/")
 def index():
-    files = os.listdir(rootPath)
-    return "main route working -- ",files
+    check = os.path.exists(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl')
+    return jsonify(check=check)
 
 @app.route("/predictArticles/<id>", methods=['GET'])
 def predictArticles(id: int):
