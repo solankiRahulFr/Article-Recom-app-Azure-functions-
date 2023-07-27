@@ -42,7 +42,7 @@ def n_recommendation(model, interactions, user_id, item_dict , item_features_mat
 
 @app.route("/")
 def index():
-    return "main route working"
+    return "main route working -- "+rootPath
 
 @app.route("/predictArticles/<id>", methods=['GET'])
 def predictArticles(id: int):
