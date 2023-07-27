@@ -9,11 +9,12 @@ from .package.module import MODULE_VALUE
 app = Flask(__name__)
 rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-
-load_model = pickle.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
-load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
-load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
-load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
+def loadModule():
+    global load_model, load_interactions, load_item_features_matrix, load_item_dict
+    load_model = pickle.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
+    load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
+    load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
+    load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
 
 
 
@@ -45,11 +46,14 @@ def index():
 
 @app.route("/predictArticles/<id>", methods=['GET'])
 def predictArticles(id: int):
+    loadModule()
     userid = int(id)
     recom_articles, recom_categories=n_recommendation(load_model, load_interactions, userid, load_item_dict, load_item_features_matrix, 5)
-    return jsonify(userid = userid,
+    response = jsonify(userid = userid,
                    articles=','.join(str(v) for v in recom_articles),
                    categories=','.join(str(v) for v in set(recom_categories)))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route("/module")
 def module():
