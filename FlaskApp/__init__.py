@@ -20,9 +20,12 @@ def loadPickle(picklefile):
 def loadModule():
     global load_model, load_interactions, load_item_features_matrix, load_item_dict
     load_model = loadPickle("lightfm_model_hybrid.pkl")
-    load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
-    load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
-    load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
+    load_interactions = loadPickle('interactions.pkl')
+    load_item_features_matrix = loadPickle('item_features_matrix.pkl')
+    load_item_dict = loadPickle('item_dict.pkl')
+    # load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
+    # load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
+    # load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
 
 
 
