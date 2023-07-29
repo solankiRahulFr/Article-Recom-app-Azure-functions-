@@ -12,7 +12,7 @@ rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 connection_string ="DefaultEndpointsProtocol=https;AccountName=project09group8aa0;AccountKey=8P39lFEsZcCnUDQe8b0cg4izw4JCp1kiVETWh6/sm/WEFKgNYQsD3HALdtZSN+C640t8ufQKGLna+AStEbySIg==;EndpointSuffix=core.windows.net"
 
 def loadPickle(picklefile):
-    blob = BlobClient.from_connection_string(conn_str=connection_string, container_name="picklefiles", blob_name=picklefile)
+    blob_client = BlobClient.from_connection_string(conn_str=connection_string, container_name="picklefiles", blob_name=picklefile)
     blob_text = blob_client.download_blob().readall()
     pickle_object = pickle.loads(blob_text)
     return
