@@ -5,16 +5,21 @@ import os
 import lightfm
 # Always use relative import for custom module
 from .package.module import MODULE_VALUE
-# from azure.storage.blob import BlobClient
+from azure.storage.blob import BlobClient
 
 app = Flask(__name__)
 rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+connection_string ="DefaultEndpointsProtocol=https;AccountName=project09group8aa0;AccountKey=8P39lFEsZcCnUDQe8b0cg4izw4JCp1kiVETWh6/sm/WEFKgNYQsD3HALdtZSN+C640t8ufQKGLna+AStEbySIg==;EndpointSuffix=core.windows.net"
 
-
+def loadPickle(picklefile):
+    blob = BlobClient.from_connection_string(conn_str=connection_string, container_name="picklefiles", blob_name=picklefile)
+    blob_text = blob_client.download_blob().readall()
+    pickle_object = pickle.loads(blob_text)
+    return
 
 def loadModule():
     global load_model, load_interactions, load_item_features_matrix, load_item_dict
-    load_model = pickle.load(open(rootPath + '/FlaskApp/app_modules/lightfm_model_hybrid.pkl','rb'))
+    load_model = loadPickle("lightfm_model_hybrid.pkl")
     load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
     load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
     load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
