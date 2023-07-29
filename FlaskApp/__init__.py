@@ -15,7 +15,7 @@ def loadPickle(picklefile):
     blob_client = BlobClient.from_connection_string(conn_str=connection_string, container_name="picklefiles", blob_name=picklefile)
     blob_text = blob_client.download_blob().readall()
     pickle_object = pickle.loads(blob_text)
-    return
+    return pickle_object
 
 def loadModule():
     global load_model, load_interactions, load_item_features_matrix, load_item_dict
