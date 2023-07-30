@@ -16,14 +16,6 @@
       "type": "http",
       "direction": "out",
       "name": "$return"
-    },
-        {
-      "name": "inputBlob",
-      "type": "blob",
-      "direction": "in",
-      "path": "container/picklefiles",
-      "connection": "AzureWebJobsStorage",
-      "dataType": "binary"
     }
   ]
 }
