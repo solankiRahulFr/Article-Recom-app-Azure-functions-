@@ -15,9 +15,13 @@ connection_string ="DefaultEndpointsProtocol=https;AccountName=project09group8aa
 
 def loadPickle(picklefile):
     blob_client = BlobClient.from_connection_string(conn_str=connection_string, container_name="picklefiles", blob_name=picklefile)
-    blob_text = blob_client.download_blob().readall()
-    pickle_object = pickle.loads(blob_text)
-    return pickle_object
+    # blob_text = blob_client.download_blob().readall()
+    # pickle_object = pickle.loads(blob_text)
+    with BytesIO() as input_blob:
+        blob_client.download_blob().download_to_stream(input_blob)
+        input_blob.seek(0)
+        df = pd.read_csv(input_blob, sep="\t")
+    return df
 
 def loadModule():
     global load_model, load_interactions, load_item_features_matrix, load_item_dict, load_data
@@ -25,7 +29,7 @@ def loadModule():
     # load_interactions = loadPickle('interactions.pkl')
     # load_item_features_matrix = loadPickle('item_features_matrix.pkl')
     # load_item_dict = loadPickle('item_dict.pkl')
-    load_data = loadPickle('dataResult.pickle')
+    load_data = loadPickle('dataResult.csv')
 
 
 
