@@ -7,7 +7,7 @@ import lightfm
 from .package.module import MODULE_VALUE
 from azure.storage.blob import BlobClient
 import pandas as pd
-import bz2
+
 
 app = Flask(__name__)
 rootPath = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -16,15 +16,15 @@ connection_string ="DefaultEndpointsProtocol=https;AccountName=project09group8aa
 def loadPickle(picklefile):
     blob_client = BlobClient.from_connection_string(conn_str=connection_string, container_name="picklefiles", blob_name=picklefile)
     blob_text = blob_client.download_blob().readall()
-    pickle_object = pickle.loads(bz2.decompress(blob_text))
+    pickle_object = pickle.loads(blob_text)
     return pickle_object
 
 def loadModule():
     global load_model, load_interactions, load_item_features_matrix, load_item_dict
-    load_model = loadPickle("lightfm_model_hybrid.pbz2")
-    load_interactions = loadPickle('interactions.pbz2')
-    load_item_features_matrix = loadPickle('item_features_matrix.pbz2')
-    load_item_dict = loadPickle('item_dict.pbz2')
+    load_model = loadPickle("lightfm_model_hybrid.pkl")
+    load_interactions = loadPickle('interactions.pkl')
+    load_item_features_matrix = loadPickle('item_features_matrix.pkl')
+    load_item_dict = loadPickle('item_dict.pkl')
     # load_data = loadPickle('data.pbz2')
     # load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
     # load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
