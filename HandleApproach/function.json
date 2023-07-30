@@ -19,14 +19,6 @@
     },
         {
       "name": "inputBlob",
-      "type": "blobTrigger",
-      "direction": "in",
-      "path": "container/picklefiles",
-      "connection": "AzureWebJobsStorage",
-      "dataType": "binary"
-    },
-        {
-      "name": "inputBlob",
       "type": "blob",
       "direction": "in",
       "path": "container/picklefiles",
