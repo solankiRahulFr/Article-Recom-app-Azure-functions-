@@ -7,6 +7,7 @@ import lightfm
 from .package.module import MODULE_VALUE
 from azure.storage.blob import BlobClient
 import pandas as pd
+from io import BytesIO
 
 
 app = Flask(__name__)
