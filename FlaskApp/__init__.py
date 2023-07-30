@@ -64,8 +64,8 @@ def predictArticles(id: int):
     recom_articles=load_data[load_data['user_id']==userid]['pred_art'].values[0]
     recom_categories=load_data[load_data['user_id']==userid]['pred_cat'].values[0]
     response = jsonify(userid = userid,
-                   articles=','.join(str(v) for v in recom_articles),
-                   categories=','.join(str(v) for v in set(recom_categories)))
+                   articles=recom_articles,
+                   categories=recom_categories)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
