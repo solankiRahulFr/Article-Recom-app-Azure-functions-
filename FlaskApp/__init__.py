@@ -20,15 +20,12 @@ def loadPickle(picklefile):
     return pickle_object
 
 def loadModule():
-    global load_model, load_interactions, load_item_features_matrix, load_item_dict
-    load_model = loadPickle("lightfm_model_hybrid.pkl")
-    load_interactions = loadPickle('interactions.pkl')
-    load_item_features_matrix = loadPickle('item_features_matrix.pkl')
-    load_item_dict = loadPickle('item_dict.pkl')
-    # load_data = loadPickle('data.pbz2')
-    # load_interactions = pickle.load(open(rootPath + '/FlaskApp/app_modules/interactions.pkl','rb'))
-    # load_item_features_matrix = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_features_matrix.pkl','rb'))
-    # load_item_dict = pickle.load(open(rootPath + '/FlaskApp/app_modules/item_dict.pkl','rb'))
+    global load_model, load_interactions, load_item_features_matrix, load_item_dict, load_data
+    # load_model = loadPickle("lightfm_model_hybrid.pkl")
+    # load_interactions = loadPickle('interactions.pkl')
+    # load_item_features_matrix = loadPickle('item_features_matrix.pkl')
+    # load_item_dict = loadPickle('item_dict.pkl')
+    load_data = pandas.read_pickle('dataResult.pickle')
 
 
 
@@ -63,7 +60,9 @@ def index():
 def predictArticles(id: int):
     loadModule()
     userid = int(id)
-    recom_articles, recom_categories=n_recommendation(load_model, load_interactions, userid, load_item_dict, load_item_features_matrix, 5)
+    # recom_articles, recom_categories=n_recommendation(load_model, load_interactions, userid, load_item_dict, load_item_features_matrix, 5)
+    recom_articles=load_data[load_data['user_id']==userid]['pred_art'].values[0]
+    recom_categories=load_data[load_data['user_id']==userid]['pred_cat'].values[0]
     response = jsonify(userid = userid,
                    articles=','.join(str(v) for v in recom_articles),
                    categories=','.join(str(v) for v in set(recom_categories)))
