@@ -25,7 +25,7 @@ def loadModule():
     # load_interactions = loadPickle('interactions.pkl')
     # load_item_features_matrix = loadPickle('item_features_matrix.pkl')
     # load_item_dict = loadPickle('item_dict.pkl')
-    load_data = pandas.read_pickle('dataResult.pickle')
+    load_data = pd.read_pickle('dataResult.pickle')
 
 
 
