@@ -1,3 +1,5 @@
+# News article recommendation using Azure function and Flask (Data - News Portal User Interactions by Globo.com https://www.kaggle.com/datasets/gspmoreira/news-portal-user-interactions-by-globocom#clicks_sample.csv)
+
 ---
 page_type: sample
 languages: 
